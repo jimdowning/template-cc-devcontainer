@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(devcontainer up:*)",
+      "Bash(devcontainer build:*)",
+      "Bash(git branch:*)"
+    ],
+    "deny": [
+      "Bash(gh gist:*)",
+      "Read(~/.ssh/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.azure/**)",
+      "Read(~/.config/gcloud/**)",
+      "Read(./.env*)",
+      "Read(~/.bashrc)",
+      "Read(~/.zshrc)",
+      "Read(~/.profile)",
+      "Read(/etc/shadow)"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "allowUnsandboxedCommands": true,
+    "excludedCommands": ["git", "gh"],
+    "network": {
+      "allowUnixSockets": [],
+      "allowAllUnixSockets": false
+    },
+    "enableWeakerNestedSandbox": true
+  }
+}

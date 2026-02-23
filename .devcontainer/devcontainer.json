@@ -10,6 +10,7 @@
     }
   },
   "runArgs": [
+    "--env-file", "${localEnv:HOME}/.config/<project-name>/.env",
     "--cap-add=NET_ADMIN",
     "--cap-add=NET_RAW"
   ],

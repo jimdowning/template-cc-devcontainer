@@ -1,0 +1,22 @@
+#!/bin/bash
+# Pre-push hook: only allow pushes to the configured user's GitHub repos.
+# Blocks pushes to any other remote to prevent exfiltration via prompt injection.
+#
+# Configure with: git config --local hooks.allowedGithubUser <username>
+
+ALLOWED_USER=$(git config hooks.allowedGithubUser 2>/dev/null)
+
+if [ -z "$ALLOWED_USER" ]; then
+    echo "BLOCKED: hooks.allowedGithubUser not set."
+    echo "Run: git config --local hooks.allowedGithubUser <your-github-username>"
+    exit 1
+fi
+
+ALLOWED_PATTERN="github\.com[:/]${ALLOWED_USER}/"
+remote_url="$2"
+
+if ! echo "$remote_url" | grep -qE "$ALLOWED_PATTERN"; then
+    echo "BLOCKED: push to '$remote_url' not allowed."
+    echo "Only pushes to github.com/${ALLOWED_USER}/ repos are permitted."
+    exit 1
+fi
